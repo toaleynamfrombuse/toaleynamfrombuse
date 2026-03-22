@@ -6,210 +6,312 @@
 <title>Meleğimin Doğum Günü</title>
 
 <style>
+
 body{
-    margin:0;
-    padding:0;
-    overflow-x:hidden;
-    font-family:'Segoe UI', cursive;
-    background: radial-gradient(circle at top,#ffd6e8,#ff8fab);
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-    align-items:center;
-    min-height:100vh;
+margin:0;
+padding:0;
+overflow-x:hidden;
+font-family:'Segoe UI', cursive;
+background: radial-gradient(circle at top,#ffd6e8,#ff8fab);
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+min-height:100vh;
 }
 
-/* Arka plan kalpler */
 .bg-heart{
-    position:absolute;
-    font-size:22px;
-    animation: floatUp 10s linear infinite;
-    opacity:0.7;
+position:absolute;
+font-size:22px;
+animation: floatUp 10s linear infinite;
+opacity:0.7;
 }
 
 @keyframes floatUp{
-    0%{ transform:translateY(100vh) scale(0.5); opacity:0;}
-    50%{ opacity:1;}
-    100%{ transform:translateY(-10vh) scale(1.2); opacity:0;}
+0%{ transform:translateY(100vh) scale(0.5); opacity:0;}
+50%{ opacity:1;}
+100%{ transform:translateY(-10vh) scale(1.2); opacity:0;}
 }
 
-/* Mektup */
 .envelope{
-    width:320px;
-    height:220px;
-    background: linear-gradient(45deg,#ffb3c6,#ffc2d1);
-    border-radius:15px;
-    position:relative;
-    cursor:pointer;
-    box-shadow:0 15px 40px rgba(0,0,0,0.3);
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    transition:0.6s;
-    animation: pulse 2s infinite;
+width:320px;
+height:220px;
+background: linear-gradient(45deg,#ffb3c6,#ffc2d1);
+border-radius:15px;
+position:relative;
+cursor:pointer;
+box-shadow:0 15px 40px rgba(0,0,0,0.3);
+display:flex;
+justify-content:center;
+align-items:center;
+transition:0.6s;
+animation: pulse 2s infinite;
 }
 
 @keyframes pulse{
-    0%{ transform:scale(1);}
-    50%{ transform:scale(1.05);}
-    100%{ transform:scale(1);}
+0%{ transform:scale(1);}
+50%{ transform:scale(1.05);}
+100%{ transform:scale(1);}
 }
 
 .envelope:before{
-    content:"";
-    position:absolute;
-    top:-110px;
-    border-left:160px solid transparent;
-    border-right:160px solid transparent;
-    border-bottom:110px solid #ff8fab;
-    transition:0.8s;
+content:"";
+position:absolute;
+top:-110px;
+border-left:160px solid transparent;
+border-right:160px solid transparent;
+border-bottom:110px solid #ff8fab;
+transition:0.8s;
 }
 
 .envelope.open:before{
-    transform:rotateX(180deg);
-    top:-50px;
+transform:rotateX(180deg);
+top:-50px;
 }
 
 .envelope.hide{
-    display:none;
+display:none;
 }
 
 .click-text{
-    font-size:24px;
-    font-weight:bold;
-    color:white;
-    text-shadow:2px 2px 6px #000;
+font-size:24px;
+font-weight:bold;
+color:white;
+text-shadow:2px 2px 6px #000;
 }
 
 .message{
-    text-align:center;
-    font-size:30px;
-    color:white;
-    display:none;
-    padding:20px;
-    white-space:pre-line;
-    margin:20px 0;
+text-align:center;
+font-size:30px;
+color:white;
+display:none;
+padding:20px;
+white-space:pre-line;
+margin:20px 0;
 }
 
 video{
-    display:none;
-    width:350px;
-    border-radius:20px;
-    box-shadow:0 10px 30px rgba(0,0,0,0.4);
-    margin:10px 0;
+display:none;
+width:350px;
+max-width:90vw;
+border-radius:20px;
+box-shadow:0 10px 30px rgba(0,0,0,0.4);
+margin:10px 0;
 }
 
-/* Konfeti */
 .confetti{
-    position:absolute;
-    font-size:22px;
-    animation: explode 1.5s ease-out forwards;
+position:absolute;
+font-size:22px;
+animation: explode 1.5s ease-out forwards;
 }
 
 @keyframes explode{
-    0%{ transform:translate(0,0) scale(1); opacity:1;}
-    100%{ transform:translate(var(--x),var(--y)) rotate(720deg); opacity:0;}
+0%{ transform:translate(0,0) scale(1); opacity:1;}
+100%{ transform:translate(var(--x),var(--y)) rotate(720deg); opacity:0;}
 }
+
+.bottom-text{
+display:none;
+width:100%;
+text-align:center;
+font-size:24px;
+color:white;
+margin-top:40px;
+margin-bottom:30px;
+font-weight:bold;
+text-shadow:0 0 10px #fff,0 0 20px #ff69b4,0 0 30px #ff1493;
+animation: glow 2s ease-in-out infinite alternate;
+}
+
+@keyframes glow{
+from{
+text-shadow:0 0 10px #fff,0 0 20px #ff69b4,0 0 30px #ff1493;
+}
+to{
+text-shadow:0 0 20px #fff,0 0 30px #ff85c2,0 0 40px #ff1493;
+}
+}
+
 </style>
 </head>
 
 <body>
 
 <div class="envelope" onclick="openLetter()">
-    <div class="click-text">TIKLA 💌</div>
+<div class="click-text">TIKLA 💌</div>
 </div>
 
-<!-- ÜST VİDEO -->
 <video id="videoTop" autoplay muted loop controls>
-    <source src="ustvideo.mp4" type="video/mp4">
+<source src="ustvideo.mp4" type="video/mp4">
 </video>
 
 <div class="message" id="message"></div>
 
-<!-- ALT VİDEO -->
 <video id="videoBottom" autoplay muted loop controls>
-    <source src="altvideo.mp4" type="video/mp4">
+<source src="altvideo.mp4" type="video/mp4">
 </video>
 
 <audio id="bgMusic" src="muzik.mp3"></audio>
 
 <script>
 
-let text = "🌸✨️🧸\nDOĞUM GÜNÜN KUTLU OLSUN 🥳🥳\nİYİ Kİ DOĞDUN MELEĞİM🪽\n🧸✨️🌸";
-let i = 0;
+/* pasta (ÜSTE ALINDI) */
+let cake=document.createElement("div");
+cake.innerHTML="🎂";
+cake.style.fontSize="80px";
+cake.style.position="fixed";
+cake.style.bottom="20px";
+cake.style.right="20px";
+cake.style.zIndex="999";
+cake.style.cursor="pointer";
+cake.style.display="none";
+document.body.appendChild(cake);
 
-function typeWriter() {
-    if (i < text.length) {
-        document.getElementById("message").innerHTML += text.charAt(i);
-        i++;
-        setTimeout(typeWriter, 60);
-    }
+let text="🌸✨️🧸\nDOĞUM GÜNÜN KUTLU OLSUN 🥳🥳\nİYİ Kİ DOĞDUN MELEĞİM🪽\n🧸✨️🌸";
+let i=0;
+let effectsStarted=false;
+
+function typeWriter(){
+if(i<text.length){
+document.getElementById("message").innerHTML+=text.charAt(i);
+i++;
+setTimeout(typeWriter,60);
+}
 }
 
 function openLetter(){
-    let envelope = document.querySelector('.envelope');
-    
-    envelope.classList.add('open');
 
-    setTimeout(()=>{
-        envelope.classList.add('hide');
-        document.getElementById('videoTop').style.display="block";
-        document.getElementById('videoBottom').style.display="block";
-    },800);
+let envelope=document.querySelector('.envelope');
 
-    document.querySelector('.click-text').style.display="none";
-    
-    document.getElementById('message').style.display="block";
-    
-    document.getElementById("bgMusic").play().catch(()=>{});
-    
-    explodeConfetti();
-    typeWriter();
+envelope.classList.add('open');
+
+setTimeout(()=>{
+envelope.classList.add('hide');
+document.getElementById('videoTop').style.display="block";
+document.getElementById('videoBottom').style.display="block";
+},800);
+
+document.querySelector('.click-text').style.display="none";
+
+document.getElementById('message').style.display="block";
+document.querySelector('.bottom-text').style.display="block";
+
+cake.style.display="block";
+
+/* MÜZİK DÜZELTİLDİ */
+let music=document.getElementById("bgMusic");
+music.currentTime=0;
+music.play();
+
+explodeConfetti();
+typeWriter();
+
+startEffects();
+
 }
 
-/* Konfeti */
+/* konfeti */
 function explodeConfetti(){
-    for(let i=0;i<60;i++){
-        let conf=document.createElement("div");
-        conf.className="confetti";
-        conf.innerHTML=["🎉","✨","💖","🌸"][Math.floor(Math.random()*4)];
-        conf.style.left="50%";
-        conf.style.top="50%";
 
-        let x=(Math.random()-0.5)*800+"px";
-        let y=(Math.random()-0.5)*600+"px";
-        conf.style.setProperty('--x',x);
-        conf.style.setProperty('--y',y);
+for(let i=0;i<60;i++){
 
-        document.body.appendChild(conf);
+let conf=document.createElement("div");
 
-        setTimeout(()=>conf.remove(),1500);
-    }
+conf.className="confetti";
+
+conf.innerHTML=["🎉","✨","💖","🌸"][Math.floor(Math.random()*4)];
+
+conf.style.left="50%";
+conf.style.top="50%";
+
+let x=(Math.random()-0.5)*800+"px";
+let y=(Math.random()-0.5)*600+"px";
+
+conf.style.setProperty('--x',x);
+conf.style.setProperty('--y',y);
+
+document.body.appendChild(conf);
+
+setTimeout(()=>conf.remove(),1500);
+
 }
 
-/* Uçan kalpler */
+}
+
+/* tüm efektler */
+function startEffects(){
+
+if(effectsStarted) return;
+effectsStarted=true;
+
+/* kalpler */
 for(let i=0;i<25;i++){
-    let heart=document.createElement("div");
-    heart.className="bg-heart";
-    heart.innerHTML="💗";
-    heart.style.left=Math.random()*100+"vw";
-    heart.style.fontSize=(18+Math.random()*25)+"px";
-    heart.style.animationDuration=(6+Math.random()*6)+"s";
-    document.body.appendChild(heart);
+let heart=document.createElement("div");
+heart.className="bg-heart";
+heart.innerHTML="💗";
+heart.style.left=Math.random()*100+"vw";
+heart.style.fontSize=(18+Math.random()*25)+"px";
+heart.style.animationDuration=(6+Math.random()*6)+"s";
+document.body.appendChild(heart);
 }
 
-/* Uçan çiçekler */
+/* çiçekler */
 for(let i=0;i<20;i++){
-    let flower=document.createElement("div");
-    flower.className="bg-heart";
-    flower.innerHTML="🌸";
-    flower.style.left=Math.random()*100+"vw";
-    flower.style.fontSize=(18+Math.random()*25)+"px";
-    flower.style.animationDuration=(8+Math.random()*6)+"s";
-    document.body.appendChild(flower);
+let flower=document.createElement("div");
+flower.className="bg-heart";
+flower.innerHTML="🌸";
+flower.style.left=Math.random()*100+"vw";
+flower.style.fontSize=(18+Math.random()*25)+"px";
+flower.style.animationDuration=(8+Math.random()*6)+"s";
+document.body.appendChild(flower);
 }
+
+/* kanatlar */
+for(let i=0;i<15;i++){
+let wing=document.createElement("div");
+wing.className="bg-heart";
+wing.innerHTML="🪽";
+wing.style.left=Math.random()*100+"vw";
+wing.style.fontSize=(18+Math.random()*25)+"px";
+wing.style.animationDuration=(8+Math.random()*6)+"s";
+document.body.appendChild(wing);
+}
+
+}
+
+/* mum üfleme */
+cake.addEventListener("click",()=>{
+let blow=document.createElement("div");
+blow.innerHTML="💨";
+blow.style.position="fixed";
+blow.style.bottom="120px";
+blow.style.right="50px";
+blow.style.fontSize="40px";
+blow.style.animation="explode 1s forwards";
+document.body.appendChild(blow);
+explodeConfetti();
+setTimeout(()=>blow.remove(),1000);
+});
+
+/* dokununca kalp */
+document.addEventListener("click",(e)=>{
+if(!effectsStarted) return;
+let heart=document.createElement("div");
+heart.innerHTML="❤️";
+heart.style.position="absolute";
+heart.style.left=e.pageX+"px";
+heart.style.top=e.pageY+"px";
+heart.style.fontSize="30px";
+heart.style.animation="explode 1s forwards";
+document.body.appendChild(heart);
+setTimeout(()=>heart.remove(),1000);
+});
 
 </script>
+
+<div class="bottom-text">
+💖 hayatıma giren en güzel mucizesin 💖
+</div>
 
 </body>
 </html>
