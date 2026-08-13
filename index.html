@@ -311,6 +311,42 @@ box-shadow:0 5px 18px rgba(0,0,0,.45);
 pointer-events:none;
 }
 
+/* GAZ VE FREN */
+
+#motorGame #controls{
+position:absolute;
+right:25px;
+bottom:25px;
+display:flex;
+gap:15px;
+z-index:70;
+}
+
+#motorGame #controls button{
+width:90px;
+height:90px;
+border:none;
+border-radius:50%;
+font-size:17px;
+font-weight:bold;
+color:white;
+box-shadow:0 6px 15px rgba(0,0,0,.4);
+touch-action:none;
+user-select:none;
+}
+
+#motorGame #gas{
+background:rgba(30,190,80,.85);
+}
+
+#motorGame #brake{
+background:rgba(220,50,50,.85);
+}
+
+#motorGame #controls button:active{
+transform:scale(.9);
+}
+
 #motorGame #gameOver{
 position:absolute;
 inset:0;
@@ -425,7 +461,7 @@ src="resimler/motor.png"
 </div>
 
 <div id="speed">
-105 KM/H
+0 KM/H
 </div>
 
 <div id="distance">
@@ -434,6 +470,20 @@ src="resimler/motor.png"
 
 <div id="joystick">
 <div id="stick"></div>
+</div>
+
+<!-- GAZ VE FREN -->
+
+<div id="controls">
+
+<button id="gas">
+GAZ
+</button>
+
+<button id="brake">
+FREN
+</button>
+
 </div>
 
 <div id="gameOver">
@@ -642,15 +692,21 @@ setTimeout(()=>heart.remove(),1000);
 
 });
 
+
+/* MOTOR AYARLARI */
+
 const SETTINGS={
 
-speed:7,
-maxSpeed:13,
-steering:.72,
+speed:4,
+maxSpeed:8,
+minSpeed:0,
+acceleration:.035,
+brakePower:.08,
+steering:.55,
 motorLimit:23,
-trafficInterval:1300,
-coinInterval:1800,
-curveChange:260
+trafficInterval:1600,
+coinInterval:2200,
+curveChange:320
 
 };
 
@@ -677,6 +733,58 @@ let curve=0;
 let targetCurve=0;
 let curveTimer=0;
 let joystickActive=false;
+
+
+/* GAZ / FREN */
+
+let gasPressed=false;
+let brakePressed=false;
+
+const gasButton=document.getElementById("gas");
+const brakeButton=document.getElementById("brake");
+
+function pressGas(e){
+
+e.preventDefault();
+
+gasPressed=true;
+
+}
+
+function releaseGas(e){
+
+e.preventDefault();
+
+gasPressed=false;
+
+}
+
+function pressBrake(e){
+
+e.preventDefault();
+
+brakePressed=true;
+
+}
+
+function releaseBrake(e){
+
+e.preventDefault();
+
+brakePressed=false;
+
+}
+
+gasButton.addEventListener("pointerdown",pressGas);
+gasButton.addEventListener("pointerup",releaseGas);
+gasButton.addEventListener("pointercancel",releaseGas);
+gasButton.addEventListener("pointerleave",releaseGas);
+
+brakeButton.addEventListener("pointerdown",pressBrake);
+brakeButton.addEventListener("pointerup",releaseBrake);
+brakeButton.addEventListener("pointercancel",releaseBrake);
+brakeButton.addEventListener("pointerleave",releaseBrake);
+
 
 const maxJoystick=45;
 
@@ -855,12 +963,32 @@ lane.element.style.opacity=.2+p*.8;
 
 }
 
+
+/* YENİ GAZ / FREN SİSTEMİ */
+
 function updateSpeed(){
 
-speed+=.0008;
+if(!playing)return;
+
+if(gasPressed){
+
+speed+=SETTINGS.acceleration;
+
+}else if(brakePressed){
+
+speed-=SETTINGS.brakePower;
+
+}else{
+
+speed-=.008;
+
+}
 
 if(speed>SETTINGS.maxSpeed)
 speed=SETTINGS.maxSpeed;
+
+if(speed<SETTINGS.minSpeed)
+speed=SETTINGS.minSpeed;
 
 document.querySelector("#motorGame #speed").innerText=
 Math.round(speed*15)+" KM/H";
@@ -871,6 +999,7 @@ document.querySelector("#motorGame #distance").innerText=
 distance.toFixed(1)+" KM";
 
 }
+
 
 function createTraffic(){
 
@@ -1077,6 +1206,9 @@ function endGame(){
 
 playing=false;
 
+gasPressed=false;
+brakePressed=false;
+
 document.querySelector("#motorGame #result").innerHTML=`
 Skor:
 <b>${score}</b>
@@ -1128,6 +1260,9 @@ curve=0;
 targetCurve=0;
 curveTimer=0;
 
+gasPressed=false;
+brakePressed=false;
+
 motor.style.left="50%";
 
 motor.style.transform=`
@@ -1144,11 +1279,16 @@ document.querySelector("#motorGame #coins").innerText="0";
 document.querySelector("#motorGame #lives").innerText="3";
 document.querySelector("#motorGame #distance").innerText="0.0 KM";
 
+document.querySelector("#motorGame #speed").innerText="0 KM/H";
+
 }
 
 function backToLetter(){
 
 playing=false;
+
+gasPressed=false;
+brakePressed=false;
 
 motorGame.style.display="none";
 
