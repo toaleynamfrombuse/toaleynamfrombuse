@@ -2,10 +2,14 @@
 <html lang="tr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>Meleğimin Doğum Günü</title>
 
 <style>
+
+*{
+box-sizing:border-box;
+}
 
 body{
 margin:0;
@@ -155,15 +159,17 @@ text-shadow:0 0 20px #fff,0 0 30px #ff85c2,0 0 40px #ff1493;
 }
 }
 
-/* ================================
+
+/* =====================================================
    MOTOR OYUNU
-================================ */
+===================================================== */
 
 #motorGame{
 position:fixed;
 inset:0;
 width:100vw;
 height:100vh;
+height:100dvh;
 overflow:hidden;
 background:#87c5e8;
 display:none;
@@ -172,7 +178,10 @@ font-family:Arial,sans-serif;
 touch-action:none;
 }
 
-/* ARKA PLAN TAM EKRAN */
+
+/* =====================================================
+   TAM EKRAN ARKA PLAN
+===================================================== */
 
 #motorGame #background{
 position:absolute;
@@ -186,25 +195,38 @@ object-position:center center;
 
 z-index:0;
 
+/*
+   Ekranın kenarlarının kesinlikle
+   görünmemesi için hafif büyütme
+*/
 transform:scale(1.08);
 
 transition:transform .08s linear;
 }
 
-/* SAHNE */
+
+/* =====================================================
+   SAHNE
+===================================================== */
 
 #motorGame #scene{
 position:absolute;
 inset:0;
+width:100%;
+height:100%;
 overflow:hidden;
 perspective:650px;
 z-index:2;
 }
 
-/* YOL */
+
+/* =====================================================
+   YOL
+===================================================== */
 
 #motorGame #road{
 position:absolute;
+
 left:50%;
 bottom:-15%;
 
@@ -224,29 +246,46 @@ background-image:url("resimler/yol.jpg");
 
 background-size:100% 100%;
 background-repeat:no-repeat;
+background-position:center;
 
 z-index:3;
 
 transition:transform .08s linear;
 }
 
-/* ŞERİTLER */
+
+/* =====================================================
+   ŞERİTLER
+===================================================== */
 
 #motorGame .lane{
 position:absolute;
+
 left:50%;
+
 width:7px;
 height:80px;
+
 background:white;
+
 border-radius:10px;
+
 transform:translateX(-50%);
-box-shadow:0 0 6px rgba(255,255,255,.5);
+
+box-shadow:
+0 0 6px rgba(255,255,255,.5);
+
+z-index:4;
 }
 
-/* MOTOR */
+
+/* =====================================================
+   MOTOR
+===================================================== */
 
 #motorGame #motor{
 position:absolute;
+
 left:50%;
 bottom:90px;
 
@@ -263,8 +302,7 @@ rotate(0deg);
 
 filter:
 drop-shadow(
-0 12px 8px
-rgba(0,0,0,.5)
+0 12px 8px rgba(0,0,0,.5)
 );
 
 transition:
@@ -272,7 +310,10 @@ left .035s linear,
 transform .06s linear;
 }
 
-/* TRAFİK */
+
+/* =====================================================
+   TRAFİK
+===================================================== */
 
 #motorGame .traffic{
 position:absolute;
@@ -288,12 +329,14 @@ transform-origin:center center;
 
 filter:
 drop-shadow(
-0 8px 6px
-rgba(0,0,0,.45)
+0 8px 6px rgba(0,0,0,.45)
 );
 }
 
-/* COIN */
+
+/* =====================================================
+   COIN
+===================================================== */
 
 #motorGame .coin{
 position:absolute;
@@ -306,7 +349,10 @@ object-fit:contain;
 z-index:18;
 }
 
-/* HUD */
+
+/* =====================================================
+   HUD
+===================================================== */
 
 #motorGame #hud{
 position:absolute;
@@ -326,11 +372,15 @@ text-shadow:
 #motorGame .stats{
 display:flex;
 justify-content:space-between;
+
 font-size:19px;
 font-weight:bold;
 }
 
-/* HIZ */
+
+/* =====================================================
+   HIZ
+===================================================== */
 
 #motorGame #speed{
 position:absolute;
@@ -349,7 +399,10 @@ text-shadow:
 2px 2px 5px #000;
 }
 
-/* MESAFE */
+
+/* =====================================================
+   MESAFE
+===================================================== */
 
 #motorGame #distance{
 position:absolute;
@@ -368,7 +421,10 @@ text-shadow:
 2px 2px 5px #000;
 }
 
-/* JOYSTICK */
+
+/* =====================================================
+   JOYSTICK
+===================================================== */
 
 #motorGame #joystick{
 position:absolute;
@@ -385,8 +441,7 @@ background:
 rgba(255,255,255,.15);
 
 border:
-3px solid
-rgba(255,255,255,.5);
+3px solid rgba(255,255,255,.5);
 
 z-index:60;
 
@@ -408,13 +463,15 @@ background:
 rgba(255,255,255,.8);
 
 box-shadow:
-0 5px 18px
-rgba(0,0,0,.45);
+0 5px 18px rgba(0,0,0,.45);
 
 pointer-events:none;
 }
 
-/* GAME OVER */
+
+/* =====================================================
+   GAME OVER
+===================================================== */
 
 #motorGame #gameOver{
 position:absolute;
@@ -424,6 +481,7 @@ inset:0;
 display:none;
 
 flex-direction:column;
+
 align-items:center;
 justify-content:center;
 
@@ -439,22 +497,22 @@ text-align:center;
 
 #motorGame #gameOver h1{
 font-size:48px;
+
 color:#ff3333;
+
 margin-bottom:20px;
 }
 
 #motorGame #restart{
 margin-top:20px;
 
-padding:
-15px 30px;
+padding:15px 30px;
 
 border:none;
 
 border-radius:12px;
 
-background:
-#26c95c;
+background:#26c95c;
 
 color:white;
 
@@ -468,8 +526,7 @@ display:none;
 
 margin-top:12px;
 
-padding:
-14px 25px;
+padding:14px 25px;
 
 border:none;
 
@@ -489,7 +546,9 @@ cursor:pointer;
 </style>
 </head>
 
+
 <body>
+
 
 <div class="envelope" id="envelope" onclick="openLetter()">
 
@@ -505,33 +564,48 @@ TIKLA 💌
 
 </div>
 
+
 <video id="videoTop" autoplay muted loop controls>
 <source src="ustvideo.mp4" type="video/mp4">
 </video>
 
+
 <div class="message" id="message"></div>
+
 
 <video id="videoBottom" autoplay muted loop controls>
 <source src="altvideo.mp4" type="video/mp4">
 </video>
 
+
 <audio id="bgMusic" src="muzik.mp3"></audio>
 
+
+<!-- =====================================================
+     MOTOR OYUNU
+===================================================== -->
+
 <div id="motorGame">
+
 
 <img
 id="background"
 src="resimler/arka-plan.jpg"
 >
 
+
 <div id="scene">
+
 <div id="road"></div>
+
 </div>
+
 
 <img
 id="motor"
 src="resimler/motor.png"
 >
+
 
 <div id="hud">
 
@@ -556,17 +630,23 @@ src="resimler/motor.png"
 
 </div>
 
+
 <div id="speed">
 105 KM/H
 </div>
+
 
 <div id="distance">
 0.0 KM
 </div>
 
+
 <div id="joystick">
+
 <div id="stick"></div>
+
 </div>
+
 
 <div id="gameOver">
 
@@ -588,17 +668,21 @@ MEKTUBA DÖN 💌
 
 </div>
 
+
 </div>
+
 
 <script>
 
-/* ================================
-   DOĞUM GÜNÜ KISMI
-================================ */
+
+/* =====================================================
+   MEKTUP
+===================================================== */
 
 let cake=document.createElement("div");
 
 cake.innerHTML="🎂";
+
 cake.style.fontSize="80px";
 cake.style.position="fixed";
 cake.style.bottom="20px";
@@ -609,10 +693,15 @@ cake.style.display="none";
 
 document.body.appendChild(cake);
 
-let text="🌸✨️🧸\nDOĞUM GÜNÜN KUTLU OLSUN 🥳🥳\nİYİ Kİ DOĞDUN MELEĞİM🪽\n🧸✨️🌸";
+
+let text=
+"🌸✨️🧸\nDOĞUM GÜNÜN KUTLU OLSUN 🥳🥳\nİYİ Kİ DOĞDUN MELEĞİM🪽\n🧸✨️🌸";
+
 
 let i=0;
+
 let effectsStarted=false;
+
 
 function typeWriter(){
 
@@ -629,11 +718,14 @@ setTimeout(typeWriter,60);
 
 }
 
+
 function openLetter(){
 
-let envelope=document.querySelector('.envelope');
+let envelope=
+document.querySelector('.envelope');
 
 envelope.classList.add('open');
+
 
 setTimeout(()=>{
 
@@ -645,6 +737,7 @@ document.getElementById('videoBottom').style.display="block";
 
 },800);
 
+
 document.querySelector('.click-text').style.display="none";
 
 document.getElementById('message').style.display="block";
@@ -653,16 +746,23 @@ document.querySelector('.bottom-text').style.display="block";
 
 cake.style.display="block";
 
-let music=document.getElementById("bgMusic");
+
+let music=
+document.getElementById("bgMusic");
 
 music.currentTime=0;
+
 music.play();
 
+
 explodeConfetti();
+
 typeWriter();
+
 startEffects();
 
 }
+
 
 function explodeConfetti(){
 
@@ -679,19 +779,26 @@ conf.innerHTML=
 conf.style.left="50%";
 conf.style.top="50%";
 
-let x=(Math.random()-.5)*800+"px";
-let y=(Math.random()-.5)*600+"px";
+let x=
+(Math.random()-.5)*800+"px";
+
+let y=
+(Math.random()-.5)*600+"px";
 
 conf.style.setProperty('--x',x);
 conf.style.setProperty('--y',y);
 
 document.body.appendChild(conf);
 
-setTimeout(()=>conf.remove(),1500);
+setTimeout(
+()=>conf.remove(),
+1500
+);
 
 }
 
 }
+
 
 function startEffects(){
 
@@ -699,11 +806,14 @@ if(effectsStarted)return;
 
 effectsStarted=true;
 
+
 for(let i=0;i<25;i++){
 
-let heart=document.createElement("div");
+let heart=
+document.createElement("div");
 
 heart.className="bg-heart";
+
 heart.innerHTML="💗";
 
 heart.style.left=
@@ -719,11 +829,14 @@ document.body.appendChild(heart);
 
 }
 
+
 for(let i=0;i<20;i++){
 
-let flower=document.createElement("div");
+let flower=
+document.createElement("div");
 
 flower.className="bg-heart";
+
 flower.innerHTML="🌸";
 
 flower.style.left=
@@ -739,11 +852,14 @@ document.body.appendChild(flower);
 
 }
 
+
 for(let i=0;i<15;i++){
 
-let wing=document.createElement("div");
+let wing=
+document.createElement("div");
 
 wing.className="bg-heart";
+
 wing.innerHTML="🪽";
 
 wing.style.left=
@@ -761,9 +877,11 @@ document.body.appendChild(wing);
 
 }
 
+
 cake.addEventListener("click",()=>{
 
-let blow=document.createElement("div");
+let blow=
+document.createElement("div");
 
 blow.innerHTML="💨";
 
@@ -779,21 +897,31 @@ document.body.appendChild(blow);
 
 explodeConfetti();
 
-setTimeout(()=>blow.remove(),1000);
+setTimeout(
+()=>blow.remove(),
+1000
+);
 
 });
+
 
 document.addEventListener("click",(e)=>{
 
 if(!effectsStarted)return;
 
-let heart=document.createElement("div");
+let heart=
+document.createElement("div");
 
 heart.innerHTML="❤️";
 
 heart.style.position="absolute";
-heart.style.left=e.pageX+"px";
-heart.style.top=e.pageY+"px";
+
+heart.style.left=
+e.pageX+"px";
+
+heart.style.top=
+e.pageY+"px";
+
 heart.style.fontSize="30px";
 
 heart.style.animation=
@@ -801,13 +929,17 @@ heart.style.animation=
 
 document.body.appendChild(heart);
 
-setTimeout(()=>heart.remove(),1000);
+setTimeout(
+()=>heart.remove(),
+1000
+);
 
 });
 
-/* ================================
+
+/* =====================================================
    MOTOR OYUNU AYARLARI
-================================ */
+===================================================== */
 
 const SETTINGS={
 
@@ -827,10 +959,16 @@ curveChange:260
 
 };
 
+
+/* =====================================================
+   ELEMENTLER
+===================================================== */
+
 const motorGame=
 document.getElementById("motorGame");
 
-const game=motorGame;
+const game=
+motorGame;
 
 const road=
 document.querySelector("#motorGame #road");
@@ -846,6 +984,11 @@ document.querySelector("#motorGame #joystick");
 
 const stick=
 document.querySelector("#motorGame #stick");
+
+
+/* =====================================================
+   DEĞİŞKENLER
+===================================================== */
 
 let motorX=50;
 
@@ -877,9 +1020,10 @@ let joystickActive=false;
 
 const maxJoystick=45;
 
-/* ================================
+
+/* =====================================================
    OYUNU BAŞLAT
-================================ */
+===================================================== */
 
 function startMotorGame(){
 
@@ -895,9 +1039,10 @@ gameLoop();
 
 }
 
-/* ================================
+
+/* =====================================================
    JOYSTICK
-================================ */
+===================================================== */
 
 function updateJoystick(x,y){
 
@@ -908,7 +1053,8 @@ const centerX=
 rect.left+
 rect.width/2;
 
-let dx=x-centerX;
+let dx=
+x-centerX;
 
 if(dx>maxJoystick)
 dx=maxJoystick;
@@ -926,6 +1072,7 @@ if(Math.abs(steering)<.06)
 steering=0;
 
 }
+
 
 joystick.addEventListener(
 "pointerdown",
@@ -946,6 +1093,7 @@ e.clientY
 
 });
 
+
 joystick.addEventListener(
 "pointermove",
 function(e){
@@ -959,6 +1107,7 @@ e.clientY
 
 });
 
+
 function releaseJoystick(){
 
 joystickActive=false;
@@ -969,6 +1118,7 @@ stick.style.transform=
 "translate(0,0)";
 
 }
+
 
 joystick.addEventListener(
 "pointerup",
@@ -985,17 +1135,20 @@ joystick.addEventListener(
 releaseJoystick
 );
 
-/* ================================
+
+/* =====================================================
    MOTOR
-================================ */
+===================================================== */
 
 function updateMotor(){
 
 if(!playing)return;
 
+
 motorX+=
 steering*
 SETTINGS.steering;
+
 
 const minX=
 50-SETTINGS.motorLimit;
@@ -1003,28 +1156,40 @@ const minX=
 const maxX=
 50+SETTINGS.motorLimit;
 
+
 if(motorX<minX)
 motorX=minX;
 
 if(motorX>maxX)
 motorX=maxX;
 
+
 cameraTarget=
 (motorX-50)*5;
+
 
 cameraX+=
 (cameraTarget-cameraX)*.09;
 
+
 const rotation=
 steering*-17;
 
+
 motor.style.left=
 motorX+"%";
+
 
 motor.style.transform=`
 translateX(-50%)
 rotate(${rotation}deg)
 `;
+
+
+/*
+   Arka planın kamera hareketi
+   ama ekranı boş bırakmayacak
+*/
 
 background.style.transform=`
 translateX(${-cameraX*.08}px)
@@ -1033,13 +1198,15 @@ scale(1.08)
 
 }
 
-/* ================================
+
+/* =====================================================
    VİRAJ
-================================ */
+===================================================== */
 
 function updateCurve(){
 
 curveTimer--;
+
 
 if(curveTimer<=0){
 
@@ -1052,8 +1219,10 @@ Math.random()*250;
 
 }
 
+
 curve+=
 (targetCurve-curve)*.008;
+
 
 road.style.transform=`
 translateX(
@@ -1061,6 +1230,7 @@ calc(-50% + ${curve}px)
 )
 rotateX(8deg)
 `;
+
 
 background.style.transform=`
 translateX(
@@ -1071,11 +1241,13 @@ scale(1.08)
 
 }
 
-/* ================================
+
+/* =====================================================
    ŞERİTLER
-================================ */
+===================================================== */
 
 let lanes=[];
+
 
 for(let i=0;i<18;i++){
 
@@ -1096,6 +1268,7 @@ z:i/18
 
 }
 
+
 function updateLanes(){
 
 lanes.forEach(lane=>{
@@ -1103,25 +1276,33 @@ lanes.forEach(lane=>{
 lane.z+=
 speed*.0008;
 
+
 if(lane.z>1.1)
 lane.z=0;
 
+
 const p=
 Math.pow(lane.z,1.75);
+
 
 const y=
 100+
 p*
 (window.innerHeight-150);
 
+
 const scale=
-.2+p*1.7;
+.2+
+p*1.7;
+
 
 const curveX=
 curve*p*1.4;
 
+
 lane.element.style.top=
 y+"px";
+
 
 lane.element.style.transform=`
 translateX(
@@ -1130,6 +1311,7 @@ calc(-50% + ${curveX}px)
 scale(${scale})
 `;
 
+
 lane.element.style.opacity=
 .2+p*.8;
 
@@ -1137,46 +1319,54 @@ lane.element.style.opacity=
 
 }
 
-/* ================================
+
+/* =====================================================
    HIZ
-================================ */
+===================================================== */
 
 function updateSpeed(){
 
 speed+=.0008;
 
+
 if(speed>SETTINGS.maxSpeed)
 speed=SETTINGS.maxSpeed;
+
 
 document.querySelector(
 "#motorGame #speed"
 ).innerText=
-Math.round(speed*15)+
-" KM/H";
+Math.round(speed*15)
++" KM/H";
+
 
 distance+=
 speed*.000012;
 
+
 document.querySelector(
 "#motorGame #distance"
 ).innerText=
-distance.toFixed(1)+
-" KM";
+distance.toFixed(1)
++" KM";
 
 }
 
-/* ================================
+
+/* =====================================================
    TRAFİK
-================================ */
+===================================================== */
 
 function createTraffic(){
 
 if(!playing)return;
 
+
 const car=
 document.createElement("img");
 
 car.className="traffic";
+
 
 const cars=[
 
@@ -1188,6 +1378,7 @@ const cars=[
 
 ];
 
+
 car.src=
 cars[
 Math.floor(
@@ -1195,12 +1386,15 @@ Math.random()*cars.length
 )
 ];
 
+
 car.dataset.lane=
 Math.random()*2-1;
 
 car.dataset.z="0";
 
+
 game.appendChild(car);
+
 
 function moveCar(){
 
@@ -1212,47 +1406,68 @@ return;
 
 }
 
+
 let z=
 parseFloat(
 car.dataset.z
 );
 
-z+=speed*.0009;
+
+z+=
+speed*.0009;
+
 
 car.dataset.z=z;
 
+
 const p=
 Math.pow(z,1.75);
+
 
 const y=
 -120+
 p*
 (window.innerHeight+260);
 
+
 const scale=
-.15+p*1.25;
+.15+
+p*1.25;
+
 
 const lane=
 parseFloat(
 car.dataset.lane
 );
 
+
 const x=
 50+
 lane*24+
 curve*p;
 
-car.style.left=x+"%";
 
-car.style.top=y+"px";
+car.style.left=
+x+"%";
+
+car.style.top=
+y+"px";
+
 
 car.style.transform=`
 translateX(-50%)
 scale(${scale})
 `;
 
-if(checkCollision(car,"car"))
+
+if(
+checkCollision(
+car,
+"car"
+)
+)
 return;
+
 
 if(z>1.15){
 
@@ -1268,23 +1483,27 @@ return;
 
 }
 
+
 requestAnimationFrame(
 moveCar
 );
 
 }
 
+
 moveCar();
 
 }
 
-/* ================================
+
+/* =====================================================
    COIN
-================================ */
+===================================================== */
 
 function createCoin(){
 
 if(!playing)return;
+
 
 const coin=
 document.createElement("img");
@@ -1299,7 +1518,9 @@ coin.dataset.z="0";
 coin.dataset.lane=
 Math.random()*2-1;
 
+
 game.appendChild(coin);
+
 
 function moveCoin(){
 
@@ -1311,46 +1532,65 @@ return;
 
 }
 
+
 let z=
 parseFloat(
 coin.dataset.z
 );
 
-z+=speed*.00085;
+
+z+=
+speed*.00085;
 
 coin.dataset.z=z;
 
+
 const p=
 Math.pow(z,1.75);
+
 
 const y=
 -50+
 p*
 (window.innerHeight+180);
 
+
 const scale=
-.15+p*1.25;
+.15+
+p*1.25;
+
 
 const lane=
 parseFloat(
 coin.dataset.lane
 );
 
+
 const x=
 50+
 lane*24+
 curve*p;
 
-coin.style.left=x+"%";
 
-coin.style.top=y+"px";
+coin.style.left=
+x+"%";
+
+coin.style.top=
+y+"px";
+
 
 coin.style.transform=`
 translateX(-50%)
 scale(${scale})
 `;
 
-if(checkCollision(coin,"coin")){
+
+if(
+checkCollision(
+coin,
+"coin"
+)
+){
 
 coins++;
 
@@ -1364,6 +1604,7 @@ return;
 
 }
 
+
 if(z>1.15){
 
 coin.remove();
@@ -1372,19 +1613,22 @@ return;
 
 }
 
+
 requestAnimationFrame(
 moveCoin
 );
 
 }
 
+
 moveCoin();
 
 }
 
-/* ================================
+
+/* =====================================================
    ÇARPIŞMA
-================================ */
+===================================================== */
 
 function checkCollision(
 object,
@@ -1399,30 +1643,38 @@ object.getBoundingClientRect();
 
 const padding=20;
 
+
 const hit=
+
 a.left+padding<
-b.right-padding&&
+b.right-padding &&
 
 a.right-padding>
-b.left+padding&&
+b.left+padding &&
 
 a.top+padding<
-b.bottom-padding&&
+b.bottom-padding &&
 
 a.bottom-padding>
 b.top+padding;
 
-if(!hit)return false;
+
+if(!hit)
+return false;
+
 
 if(type==="car"){
 
 lives--;
 
+
 document.querySelector(
 "#motorGame #lives"
 ).innerText=lives;
 
+
 object.remove();
+
 
 motor.style.filter=`
 brightness(2)
@@ -1431,33 +1683,40 @@ drop-shadow(
 )
 `;
 
+
 setTimeout(()=>{
 
 motor.style.filter="";
 
 },200);
 
+
 if(lives<=0)
 endGame();
+
 
 return true;
 
 }
 
+
 if(type==="coin")
 return true;
+
 
 return false;
 
 }
 
-/* ================================
+
+/* =====================================================
    GAME OVER
-================================ */
+===================================================== */
 
 function endGame(){
 
 playing=false;
+
 
 document.querySelector(
 "#motorGame #result"
@@ -1469,9 +1728,7 @@ Skor:
 <br><br>
 
 Mesafe:
-<b>
-${distance.toFixed(1)} KM
-</b>
+<b>${distance.toFixed(1)} KM</b>
 
 <br><br>
 
@@ -1480,9 +1737,11 @@ Coin:
 
 `;
 
+
 document.querySelector(
 "#motorGame #gameOver"
 ).style.display="flex";
+
 
 document.getElementById(
 "backLetter"
@@ -1490,9 +1749,10 @@ document.getElementById(
 
 }
 
-/* ================================
+
+/* =====================================================
    RESTART
-================================ */
+===================================================== */
 
 document.getElementById(
 "restart"
@@ -1514,6 +1774,11 @@ gameLoop();
 
 };
 
+
+/* =====================================================
+   DEĞERLERİ SIFIRLA
+===================================================== */
+
 function restartGameValues(){
 
 document.querySelectorAll(
@@ -1523,27 +1788,37 @@ document.querySelectorAll(
 element=>element.remove()
 );
 
+
 playing=false;
 
+
 motorX=50;
+
 steering=0;
 
 speed=SETTINGS.speed;
 
 score=0;
+
 coins=0;
+
 lives=3;
 
 distance=0;
 
 cameraX=0;
+
 cameraTarget=0;
 
 curve=0;
+
 targetCurve=0;
+
 curveTimer=0;
 
+
 motor.style.left="50%";
+
 
 motor.style.transform=`
 translateX(-50%)
@@ -1552,8 +1827,14 @@ rotate(0deg)
 
 motor.style.filter="";
 
+
 stick.style.transform=
 "translate(0,0)";
+
+
+background.style.transform=
+"scale(1.08)";
+
 
 document.querySelector(
 "#motorGame #score"
@@ -1571,14 +1852,12 @@ document.querySelector(
 "#motorGame #distance"
 ).innerText="0.0 KM";
 
-background.style.transform=
-"scale(1.08)";
-
 }
 
-/* ================================
+
+/* =====================================================
    MEKTUBA DÖN
-================================ */
+===================================================== */
 
 function backToLetter(){
 
@@ -1610,9 +1889,10 @@ cake.style.display="none";
 
 }
 
-/* ================================
-   ZAMANLAYICILAR
-================================ */
+
+/* =====================================================
+   TRAFİK / COIN
+===================================================== */
 
 setInterval(
 createTraffic,
@@ -1624,13 +1904,15 @@ createCoin,
 SETTINGS.coinInterval
 );
 
-/* ================================
-   ANA DÖNGÜ
-================================ */
+
+/* =====================================================
+   OYUN DÖNGÜSÜ
+===================================================== */
 
 function gameLoop(){
 
-if(!playing)return;
+if(!playing)
+return;
 
 updateMotor();
 
@@ -1648,9 +1930,11 @@ gameLoop
 
 </script>
 
+
 <div class="bottom-text">
 💖 hayatıma giren en güzel mucizesin 💖
 </div>
+
 
 </body>
 </html>
