@@ -12,7 +12,7 @@ margin:0;
 padding:0;
 overflow-x:hidden;
 font-family:'Segoe UI', cursive;
-background: radial-gradient(circle at top,#ffd6e8,#ff8fab);
+background:radial-gradient(circle at top,#ffd6e8,#ff8fab);
 display:flex;
 flex-direction:column;
 justify-content:center;
@@ -23,35 +23,37 @@ min-height:100vh;
 .bg-heart{
 position:absolute;
 font-size:22px;
-animation: floatUp 10s linear infinite;
-opacity:0.7;
+animation:floatUp 10s linear infinite;
+opacity:.7;
 }
 
 @keyframes floatUp{
-0%{ transform:translateY(100vh) scale(0.5); opacity:0;}
-50%{ opacity:1;}
-100%{ transform:translateY(-10vh) scale(1.2); opacity:0;}
+0%{transform:translateY(100vh) scale(.5);opacity:0;}
+50%{opacity:1;}
+100%{transform:translateY(-10vh) scale(1.2);opacity:0;}
 }
 
 .envelope{
 width:320px;
 height:220px;
-background: linear-gradient(45deg,#ffb3c6,#ffc2d1);
+background:linear-gradient(45deg,#ffb3c6,#ffc2d1);
 border-radius:15px;
 position:relative;
 cursor:pointer;
-box-shadow:0 15px 40px rgba(0,0,0,0.3);
+box-shadow:0 15px 40px rgba(0,0,0,.3);
 display:flex;
+flex-direction:column;
 justify-content:center;
 align-items:center;
-transition:0.6s;
-animation: pulse 2s infinite;
+transition:.6s;
+animation:pulse 2s infinite;
+z-index:10;
 }
 
 @keyframes pulse{
-0%{ transform:scale(1);}
-50%{ transform:scale(1.05);}
-100%{ transform:scale(1);}
+0%{transform:scale(1);}
+50%{transform:scale(1.05);}
+100%{transform:scale(1);}
 }
 
 .envelope:before{
@@ -61,7 +63,7 @@ top:-110px;
 border-left:160px solid transparent;
 border-right:160px solid transparent;
 border-bottom:110px solid #ff8fab;
-transition:0.8s;
+transition:.8s;
 }
 
 .envelope.open:before{
@@ -80,6 +82,27 @@ color:white;
 text-shadow:2px 2px 6px #000;
 }
 
+.play-button{
+font-size:22px;
+font-weight:bold;
+color:white;
+background:linear-gradient(135deg,#ff1493,#ff69b4);
+border:none;
+border-radius:15px;
+padding:12px 30px;
+margin-bottom:12px;
+cursor:pointer;
+box-shadow:0 5px 15px rgba(0,0,0,.3);
+text-shadow:1px 1px 3px #000;
+position:relative;
+z-index:20;
+transition:.2s;
+}
+
+.play-button:active{
+transform:scale(.92);
+}
+
 .message{
 text-align:center;
 font-size:30px;
@@ -90,24 +113,24 @@ white-space:pre-line;
 margin:20px 0;
 }
 
-video{
+body>video{
 display:none;
 width:350px;
 max-width:90vw;
 border-radius:20px;
-box-shadow:0 10px 30px rgba(0,0,0,0.4);
+box-shadow:0 10px 30px rgba(0,0,0,.4);
 margin:10px 0;
 }
 
 .confetti{
 position:absolute;
 font-size:22px;
-animation: explode 1.5s ease-out forwards;
+animation:explode 1.5s ease-out forwards;
 }
 
 @keyframes explode{
-0%{ transform:translate(0,0) scale(1); opacity:1;}
-100%{ transform:translate(var(--x),var(--y)) rotate(720deg); opacity:0;}
+0%{transform:translate(0,0) scale(1);opacity:1;}
+100%{transform:translate(var(--x),var(--y)) rotate(720deg);opacity:0;}
 }
 
 .bottom-text{
@@ -120,7 +143,7 @@ margin-top:40px;
 margin-bottom:30px;
 font-weight:bold;
 text-shadow:0 0 10px #fff,0 0 20px #ff69b4,0 0 30px #ff1493;
-animation: glow 2s ease-in-out infinite alternate;
+animation:glow 2s ease-in-out infinite alternate;
 }
 
 @keyframes glow{
@@ -132,13 +155,222 @@ text-shadow:0 0 20px #fff,0 0 30px #ff85c2,0 0 40px #ff1493;
 }
 }
 
+#motorGame{
+position:fixed;
+inset:0;
+width:100vw;
+height:100vh;
+overflow:hidden;
+background:#87c5e8;
+display:none;
+z-index:5000;
+font-family:Arial,sans-serif;
+touch-action:none;
+}
+
+#motorGame #background{
+position:absolute;
+width:120%;
+height:120%;
+left:-10%;
+top:-10%;
+object-fit:cover;
+z-index:0;
+transform:scale(1.05);
+transition:transform .08s linear;
+}
+
+#motorGame #scene{
+position:absolute;
+inset:0;
+overflow:hidden;
+perspective:650px;
+z-index:2;
+}
+
+#motorGame #road{
+position:absolute;
+left:50%;
+bottom:-15%;
+width:55vw;
+min-width:320px;
+max-width:800px;
+height:125%;
+transform:translateX(-50%) rotateX(8deg);
+transform-origin:bottom center;
+background-image:url("resimler/yol.jpg");
+background-size:100% 100%;
+background-repeat:no-repeat;
+z-index:3;
+transition:transform .08s linear;
+}
+
+#motorGame .lane{
+position:absolute;
+left:50%;
+width:7px;
+height:80px;
+background:white;
+border-radius:10px;
+transform:translateX(-50%);
+box-shadow:0 0 6px rgba(255,255,255,.5);
+}
+
+#motorGame #motor{
+position:absolute;
+left:50%;
+bottom:90px;
+width:115px;
+height:155px;
+object-fit:contain;
+z-index:30;
+transform:translateX(-50%) rotate(0deg);
+filter:drop-shadow(0 12px 8px rgba(0,0,0,.5));
+transition:left .035s linear,transform .06s linear;
+}
+
+#motorGame .traffic{
+position:absolute;
+width:80px;
+height:105px;
+object-fit:contain;
+z-index:20;
+transform-origin:center center;
+filter:drop-shadow(0 8px 6px rgba(0,0,0,.45));
+}
+
+#motorGame .coin{
+position:absolute;
+width:38px;
+height:38px;
+object-fit:contain;
+z-index:18;
+}
+
+#motorGame #hud{
+position:absolute;
+top:15px;
+left:15px;
+right:15px;
+z-index:50;
+color:white;
+text-shadow:2px 2px 5px #000;
+}
+
+#motorGame .stats{
+display:flex;
+justify-content:space-between;
+font-size:19px;
+font-weight:bold;
+}
+
+#motorGame #speed{
+position:absolute;
+right:20px;
+top:65px;
+z-index:50;
+color:white;
+font-size:30px;
+font-weight:bold;
+text-shadow:2px 2px 5px #000;
+}
+
+#motorGame #distance{
+position:absolute;
+right:20px;
+top:105px;
+z-index:50;
+color:white;
+font-size:16px;
+font-weight:bold;
+text-shadow:2px 2px 5px #000;
+}
+
+#motorGame #joystick{
+position:absolute;
+left:25px;
+bottom:25px;
+width:155px;
+height:155px;
+border-radius:50%;
+background:rgba(255,255,255,.15);
+border:3px solid rgba(255,255,255,.5);
+z-index:60;
+touch-action:none;
+}
+
+#motorGame #stick{
+position:absolute;
+left:45px;
+top:45px;
+width:65px;
+height:65px;
+border-radius:50%;
+background:rgba(255,255,255,.8);
+box-shadow:0 5px 18px rgba(0,0,0,.45);
+pointer-events:none;
+}
+
+#motorGame #gameOver{
+position:absolute;
+inset:0;
+display:none;
+flex-direction:column;
+align-items:center;
+justify-content:center;
+background:rgba(0,0,0,.86);
+color:white;
+z-index:100;
+text-align:center;
+}
+
+#motorGame #gameOver h1{
+font-size:48px;
+color:#ff3333;
+margin-bottom:20px;
+}
+
+#motorGame #restart{
+margin-top:20px;
+padding:15px 30px;
+border:none;
+border-radius:12px;
+background:#26c95c;
+color:white;
+font-size:20px;
+cursor:pointer;
+}
+
+#backLetter{
+display:none;
+margin-top:12px;
+padding:14px 25px;
+border:none;
+border-radius:12px;
+background:#ff69b4;
+color:white;
+font-size:18px;
+font-weight:bold;
+cursor:pointer;
+}
+
 </style>
 </head>
 
 <body>
 
-<div class="envelope" onclick="openLetter()">
-<div class="click-text">TIKLA 💌</div>
+<div class="envelope" id="envelope" onclick="openLetter()">
+
+<button
+class="play-button"
+onclick="event.stopPropagation();startMotorGame();">
+OYNA 🎮
+</button>
+
+<div class="click-text">
+TIKLA 💌
+</div>
+
 </div>
 
 <video id="videoTop" autoplay muted loop controls>
@@ -153,10 +385,83 @@ text-shadow:0 0 20px #fff,0 0 30px #ff85c2,0 0 40px #ff1493;
 
 <audio id="bgMusic" src="muzik.mp3"></audio>
 
+<div id="motorGame">
+
+<img
+id="background"
+src="resimler/arka-plan.jpg"
+>
+
+<div id="scene">
+<div id="road"></div>
+</div>
+
+<img
+id="motor"
+src="resimler/motor.png"
+>
+
+<div id="hud">
+
+<div class="stats">
+
+<span>
+🏆
+<span id="score">0</span>
+</span>
+
+<span>
+🪙
+<span id="coins">0</span>
+</span>
+
+<span>
+❤️
+<span id="lives">3</span>
+</span>
+
+</div>
+
+</div>
+
+<div id="speed">
+105 KM/H
+</div>
+
+<div id="distance">
+0.0 KM
+</div>
+
+<div id="joystick">
+<div id="stick"></div>
+</div>
+
+<div id="gameOver">
+
+<h1>
+OYUN BİTTİ
+</h1>
+
+<p id="result"></p>
+
+<button id="restart">
+TEKRAR OYNA
+</button>
+
+<button
+id="backLetter"
+onclick="backToLetter()">
+MEKTUBA DÖN 💌
+</button>
+
+</div>
+
+</div>
+
 <script>
 
-/* pasta (ÜSTE ALINDI) */
 let cake=document.createElement("div");
+
 cake.innerHTML="🎂";
 cake.style.fontSize="80px";
 cake.style.position="fixed";
@@ -165,18 +470,26 @@ cake.style.right="20px";
 cake.style.zIndex="999";
 cake.style.cursor="pointer";
 cake.style.display="none";
+
 document.body.appendChild(cake);
 
 let text="🌸✨️🧸\nDOĞUM GÜNÜN KUTLU OLSUN 🥳🥳\nİYİ Kİ DOĞDUN MELEĞİM🪽\n🧸✨️🌸";
+
 let i=0;
 let effectsStarted=false;
 
 function typeWriter(){
+
 if(i<text.length){
+
 document.getElementById("message").innerHTML+=text.charAt(i);
+
 i++;
+
 setTimeout(typeWriter,60);
+
 }
+
 }
 
 function openLetter(){
@@ -186,31 +499,34 @@ let envelope=document.querySelector('.envelope');
 envelope.classList.add('open');
 
 setTimeout(()=>{
+
 envelope.classList.add('hide');
+
 document.getElementById('videoTop').style.display="block";
+
 document.getElementById('videoBottom').style.display="block";
+
 },800);
 
 document.querySelector('.click-text').style.display="none";
 
 document.getElementById('message').style.display="block";
+
 document.querySelector('.bottom-text').style.display="block";
 
 cake.style.display="block";
 
-/* MÜZİK DÜZELTİLDİ */
 let music=document.getElementById("bgMusic");
+
 music.currentTime=0;
 music.play();
 
 explodeConfetti();
 typeWriter();
-
 startEffects();
 
 }
 
-/* konfeti */
 function explodeConfetti(){
 
 for(let i=0;i<60;i++){
@@ -238,74 +554,640 @@ setTimeout(()=>conf.remove(),1500);
 
 }
 
-/* tüm efektler */
 function startEffects(){
 
-if(effectsStarted) return;
+if(effectsStarted)return;
+
 effectsStarted=true;
 
-/* kalpler */
 for(let i=0;i<25;i++){
+
 let heart=document.createElement("div");
+
 heart.className="bg-heart";
 heart.innerHTML="💗";
 heart.style.left=Math.random()*100+"vw";
 heart.style.fontSize=(18+Math.random()*25)+"px";
 heart.style.animationDuration=(6+Math.random()*6)+"s";
+
 document.body.appendChild(heart);
+
 }
 
-/* çiçekler */
 for(let i=0;i<20;i++){
+
 let flower=document.createElement("div");
+
 flower.className="bg-heart";
 flower.innerHTML="🌸";
 flower.style.left=Math.random()*100+"vw";
 flower.style.fontSize=(18+Math.random()*25)+"px";
 flower.style.animationDuration=(8+Math.random()*6)+"s";
+
 document.body.appendChild(flower);
+
 }
 
-/* kanatlar */
 for(let i=0;i<15;i++){
+
 let wing=document.createElement("div");
+
 wing.className="bg-heart";
 wing.innerHTML="🪽";
 wing.style.left=Math.random()*100+"vw";
 wing.style.fontSize=(18+Math.random()*25)+"px";
 wing.style.animationDuration=(8+Math.random()*6)+"s";
+
 document.body.appendChild(wing);
-}
 
 }
 
-/* mum üfleme */
+}
+
 cake.addEventListener("click",()=>{
+
 let blow=document.createElement("div");
+
 blow.innerHTML="💨";
 blow.style.position="fixed";
 blow.style.bottom="120px";
 blow.style.right="50px";
 blow.style.fontSize="40px";
 blow.style.animation="explode 1s forwards";
+
 document.body.appendChild(blow);
+
 explodeConfetti();
+
 setTimeout(()=>blow.remove(),1000);
+
 });
 
-/* dokununca kalp */
 document.addEventListener("click",(e)=>{
-if(!effectsStarted) return;
+
+if(!effectsStarted)return;
+
 let heart=document.createElement("div");
+
 heart.innerHTML="❤️";
 heart.style.position="absolute";
 heart.style.left=e.pageX+"px";
 heart.style.top=e.pageY+"px";
 heart.style.fontSize="30px";
 heart.style.animation="explode 1s forwards";
+
 document.body.appendChild(heart);
+
 setTimeout(()=>heart.remove(),1000);
+
 });
+
+const SETTINGS={
+
+speed:7,
+maxSpeed:13,
+steering:.72,
+motorLimit:23,
+trafficInterval:1300,
+coinInterval:1800,
+curveChange:260
+
+};
+
+const motorGame=document.getElementById("motorGame");
+const game=motorGame;
+
+const road=document.querySelector("#motorGame #road");
+const motor=document.querySelector("#motorGame #motor");
+const background=document.querySelector("#motorGame #background");
+const joystick=document.querySelector("#motorGame #joystick");
+const stick=document.querySelector("#motorGame #stick");
+
+let motorX=50;
+let steering=0;
+let playing=false;
+let speed=SETTINGS.speed;
+let score=0;
+let coins=0;
+let lives=3;
+let distance=0;
+let cameraX=0;
+let cameraTarget=0;
+let curve=0;
+let targetCurve=0;
+let curveTimer=0;
+let joystickActive=false;
+
+const maxJoystick=45;
+
+function startMotorGame(){
+
+document.getElementById("envelope").style.display="none";
+
+motorGame.style.display="block";
+
+restartGameValues();
+
+playing=true;
+
+gameLoop();
+
+}
+
+function updateJoystick(x,y){
+
+const rect=joystick.getBoundingClientRect();
+
+const centerX=rect.left+rect.width/2;
+
+let dx=x-centerX;
+
+if(dx>maxJoystick)dx=maxJoystick;
+if(dx<-maxJoystick)dx=-maxJoystick;
+
+stick.style.transform=`translate(${dx}px,0)`;
+
+steering=dx/maxJoystick;
+
+if(Math.abs(steering)<.06)steering=0;
+
+}
+
+joystick.addEventListener("pointerdown",function(e){
+
+e.preventDefault();
+
+joystickActive=true;
+
+joystick.setPointerCapture(e.pointerId);
+
+updateJoystick(e.clientX,e.clientY);
+
+});
+
+joystick.addEventListener("pointermove",function(e){
+
+if(!joystickActive)return;
+
+updateJoystick(e.clientX,e.clientY);
+
+});
+
+function releaseJoystick(){
+
+joystickActive=false;
+steering=0;
+stick.style.transform="translate(0,0)";
+
+}
+
+joystick.addEventListener("pointerup",releaseJoystick);
+joystick.addEventListener("pointercancel",releaseJoystick);
+joystick.addEventListener("lostpointercapture",releaseJoystick);
+
+function updateMotor(){
+
+if(!playing)return;
+
+motorX+=steering*SETTINGS.steering;
+
+const minX=50-SETTINGS.motorLimit;
+const maxX=50+SETTINGS.motorLimit;
+
+if(motorX<minX)motorX=minX;
+if(motorX>maxX)motorX=maxX;
+
+cameraTarget=(motorX-50)*5;
+
+cameraX+=(cameraTarget-cameraX)*.09;
+
+const rotation=steering*-17;
+
+motor.style.left=motorX+"%";
+
+motor.style.transform=`
+translateX(-50%)
+rotate(${rotation}deg)
+`;
+
+background.style.transform=`
+translateX(${-cameraX*.08}px)
+scale(1.05)
+`;
+
+}
+
+function updateCurve(){
+
+curveTimer--;
+
+if(curveTimer<=0){
+
+targetCurve=(Math.random()*2-1)*70;
+
+curveTimer=SETTINGS.curveChange+Math.random()*250;
+
+}
+
+curve+=(targetCurve-curve)*.008;
+
+road.style.transform=`
+translateX(
+calc(-50% + ${curve}px)
+)
+rotateX(8deg)
+`;
+
+background.style.transform=`
+translateX(
+${-cameraX*.08-curve*.12}px
+)
+scale(1.05)
+`;
+
+}
+
+let lanes=[];
+
+for(let i=0;i<18;i++){
+
+const lane=document.createElement("div");
+
+lane.className="lane";
+
+road.appendChild(lane);
+
+lanes.push({
+element:lane,
+z:i/18
+});
+
+}
+
+function updateLanes(){
+
+lanes.forEach(lane=>{
+
+lane.z+=speed*.0008;
+
+if(lane.z>1.1)lane.z=0;
+
+const p=Math.pow(lane.z,1.75);
+
+const y=100+p*(window.innerHeight-150);
+
+const scale=.2+p*1.7;
+
+const curveX=curve*p*1.4;
+
+lane.element.style.top=y+"px";
+
+lane.element.style.transform=`
+translateX(
+calc(-50% + ${curveX}px)
+)
+scale(${scale})
+`;
+
+lane.element.style.opacity=.2+p*.8;
+
+});
+
+}
+
+function updateSpeed(){
+
+speed+=.0008;
+
+if(speed>SETTINGS.maxSpeed)
+speed=SETTINGS.maxSpeed;
+
+document.querySelector("#motorGame #speed").innerText=
+Math.round(speed*15)+" KM/H";
+
+distance+=speed*.000012;
+
+document.querySelector("#motorGame #distance").innerText=
+distance.toFixed(1)+" KM";
+
+}
+
+function createTraffic(){
+
+if(!playing)return;
+
+const car=document.createElement("img");
+
+car.className="traffic";
+
+const cars=[
+"resimler/araba1.png",
+"resimler/araba2.png",
+"resimler/araba3.png"
+];
+
+car.src=cars[Math.floor(Math.random()*cars.length)];
+
+car.dataset.lane=Math.random()*2-1;
+car.dataset.z="0";
+
+game.appendChild(car);
+
+function moveCar(){
+
+if(!playing){
+
+car.remove();
+return;
+
+}
+
+let z=parseFloat(car.dataset.z);
+
+z+=speed*.0009;
+
+car.dataset.z=z;
+
+const p=Math.pow(z,1.75);
+
+const y=-120+p*(window.innerHeight+260);
+
+const scale=.15+p*1.25;
+
+const lane=parseFloat(car.dataset.lane);
+
+const x=50+lane*24+curve*p;
+
+car.style.left=x+"%";
+car.style.top=y+"px";
+
+car.style.transform=`
+translateX(-50%)
+scale(${scale})
+`;
+
+if(checkCollision(car,"car"))
+return;
+
+if(z>1.15){
+
+car.remove();
+
+score++;
+
+document.querySelector("#motorGame #score").innerText=score;
+
+return;
+
+}
+
+requestAnimationFrame(moveCar);
+
+}
+
+moveCar();
+
+}
+
+function createCoin(){
+
+if(!playing)return;
+
+const coin=document.createElement("img");
+
+coin.className="coin";
+
+coin.src="resimler/coin.png";
+
+coin.dataset.z="0";
+
+coin.dataset.lane=Math.random()*2-1;
+
+game.appendChild(coin);
+
+function moveCoin(){
+
+if(!playing){
+
+coin.remove();
+return;
+
+}
+
+let z=parseFloat(coin.dataset.z);
+
+z+=speed*.00085;
+
+coin.dataset.z=z;
+
+const p=Math.pow(z,1.75);
+
+const y=-50+p*(window.innerHeight+180);
+
+const scale=.15+p*1.25;
+
+const lane=parseFloat(coin.dataset.lane);
+
+const x=50+lane*24+curve*p;
+
+coin.style.left=x+"%";
+coin.style.top=y+"px";
+
+coin.style.transform=`
+translateX(-50%)
+scale(${scale})
+`;
+
+if(checkCollision(coin,"coin")){
+
+coins++;
+
+document.querySelector("#motorGame #coins").innerText=coins;
+
+coin.remove();
+
+return;
+
+}
+
+if(z>1.15){
+
+coin.remove();
+return;
+
+}
+
+requestAnimationFrame(moveCoin);
+
+}
+
+moveCoin();
+
+}
+
+function checkCollision(object,type){
+
+const a=motor.getBoundingClientRect();
+const b=object.getBoundingClientRect();
+
+const padding=20;
+
+const hit=
+a.left+padding<b.right-padding &&
+a.right-padding>b.left+padding &&
+a.top+padding<b.bottom-padding &&
+a.bottom-padding>b.top+padding;
+
+if(!hit)return false;
+
+if(type==="car"){
+
+lives--;
+
+document.querySelector("#motorGame #lives").innerText=lives;
+
+object.remove();
+
+motor.style.filter=`
+brightness(2)
+drop-shadow(
+0 0 20px red
+)
+`;
+
+setTimeout(()=>{
+motor.style.filter="";
+},200);
+
+if(lives<=0)
+endGame();
+
+return true;
+
+}
+
+if(type==="coin")
+return true;
+
+return false;
+
+}
+
+function endGame(){
+
+playing=false;
+
+document.querySelector("#motorGame #result").innerHTML=`
+Skor:
+<b>${score}</b>
+<br><br>
+Mesafe:
+<b>${distance.toFixed(1)} KM</b>
+<br><br>
+Coin:
+<b>${coins}</b>
+`;
+
+document.querySelector("#motorGame #gameOver").style.display="flex";
+
+document.getElementById("backLetter").style.display="block";
+
+}
+
+document.getElementById("restart").onclick=function(){
+
+restartGameValues();
+
+playing=true;
+
+document.querySelector("#motorGame #gameOver").style.display="none";
+
+document.getElementById("backLetter").style.display="none";
+
+gameLoop();
+
+};
+
+function restartGameValues(){
+
+document.querySelectorAll("#motorGame .traffic,#motorGame .coin")
+.forEach(element=>element.remove());
+
+playing=false;
+
+motorX=50;
+steering=0;
+speed=SETTINGS.speed;
+score=0;
+coins=0;
+lives=3;
+distance=0;
+cameraX=0;
+cameraTarget=0;
+curve=0;
+targetCurve=0;
+curveTimer=0;
+
+motor.style.left="50%";
+
+motor.style.transform=`
+translateX(-50%)
+rotate(0deg)
+`;
+
+motor.style.filter="";
+
+stick.style.transform="translate(0,0)";
+
+document.querySelector("#motorGame #score").innerText="0";
+document.querySelector("#motorGame #coins").innerText="0";
+document.querySelector("#motorGame #lives").innerText="3";
+document.querySelector("#motorGame #distance").innerText="0.0 KM";
+
+}
+
+function backToLetter(){
+
+playing=false;
+
+motorGame.style.display="none";
+
+document.querySelector("#motorGame #gameOver").style.display="none";
+
+document.getElementById("backLetter").style.display="none";
+
+document.getElementById("envelope").style.display="flex";
+
+document.getElementById("envelope").classList.remove("open");
+
+document.querySelector(".click-text").style.display="block";
+
+cake.style.display="none";
+
+}
+
+setInterval(
+createTraffic,
+SETTINGS.trafficInterval
+);
+
+setInterval(
+createCoin,
+SETTINGS.coinInterval
+);
+
+function gameLoop(){
+
+if(!playing)return;
+
+updateMotor();
+updateCurve();
+updateLanes();
+updateSpeed();
+
+requestAnimationFrame(gameLoop);
+
+}
 
 </script>
 
